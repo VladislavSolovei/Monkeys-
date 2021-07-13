@@ -42,11 +42,8 @@ class ViewController: UIViewController {
 
         selectedMonkeyTextField.inputView = picker
         selectedMonkeyTextField.inputAccessoryView = toolbar()
-        var string: NSMutableAttributedString = pickedMonkeyLabel.attributedText?.mutableCopy() as? NSMutableAttributedString
-        string.addAttribute(.link, value: "https://google.com", range: NSRange(location: 6, length: string.length - 6))
-        
-        pickedMonkeyLabel.attributedText = string
     }
+    @IBOutlet weak var Table: UITableView!
 }
 
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -77,8 +74,16 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-extension ViewController: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        <#code#>
+extension ViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return monkeysList.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let nameForCell = monkeysList[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = nameForCell
+        return cell
     }
 }
